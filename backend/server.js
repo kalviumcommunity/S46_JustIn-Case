@@ -1,6 +1,5 @@
 require("dotenv").config();
-const express = require("express");
-const app = express();
+const app = require('./routes');
 const mongoose = require("mongoose");
 
 let connectionStatus = "Disconnected";
