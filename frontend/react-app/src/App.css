@@ -6,7 +6,6 @@
 
 #root {
   margin: 0 auto;
-  /* padding: 2rem; */
   text-align: center;
 }
 
@@ -15,8 +14,6 @@ body {
 }
 
 header {
-  /* border: 2px solid red; */
-  /* padding: 20px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,7 +21,6 @@ header {
 }
 
 .logo-sign {
-  /* border: 2px solid ; */
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -43,7 +39,6 @@ header p {
 }
 
 .container {
-  /* border: 2px solid red; */
   padding: 20px;
   display: flex;
   justify-content: space-around;
@@ -53,7 +48,6 @@ header p {
 
 .App {
   gap: 30px;
-  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -71,4 +65,19 @@ header p {
   box-shadow: none;
   transform: translate(2px, 2px);
   transition: ease-in-out;
+}
+
+.likes,
+.disLikes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-dis {
+  display: flex;
+  width: 8%;
+  justify-content: space-around;
+  align-items: center;
 }
