@@ -1,7 +1,9 @@
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const { User, Post } = require("./schemas"); // Importing model from schemas.js
 
+app.use(cors());
 app.use(express.json());
 
 // GET endpoint to fetch all users
