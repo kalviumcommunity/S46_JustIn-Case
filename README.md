@@ -9,7 +9,8 @@
 - Like - Having a like button for each post
 
 
-**Deployed Link: https://justin-case.onrender.com/ping**
+**Deployed Link BACKEND: https://justin-case.onrender.com/ping**
 
+**Deployed Link FRONTEND: https://justin-case-front.onrender.com**
 
 > More features will be available soon.
