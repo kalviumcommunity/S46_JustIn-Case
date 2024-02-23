@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   userid: { type: Number, required: true },
-  username: { type: String, required: true },
+  username: { type: String, required: true, lowercase:true },
   email: { type: String, required: true },
   password: { type: String, required: true },
   posts: { type: [Number], default: [], required: true },
@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
 
 // Schema for the posts collection
 const postSchema = new mongoose.Schema({
-  post_id: { type: Number, required: true },
-  user_id: { type: Number, required: true },
+  postid: { type: Number, required: true },
+  userid: { type: Number, required: true },
   content: { type: String, required: true },
   likes_count: { type: Number, required: true, default: 0 },
   dislikes_count: { type: Number, required: true, default: 0 },
