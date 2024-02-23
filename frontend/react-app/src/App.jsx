@@ -1,33 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Entity from './components/Entity'
+import { useState } from "react";
+import "./App.css";
+import Header from "./components/Header";
 
 function App() {
-
   return (
-    <div className='App'>
-    <header>
-      <div className='logo-sign' >
-      <h1>
-        JustIn Case
-      </h1>
-      <button id='logbtn'>
-        Login/SignUp
-      </button>
-      </div>
-
-     <p>
-     The idea of the project Justin Case is to create a comprehensive list of dad jokes which will entertain the readers. This list will serve as a go-to resource just in case anyone is in a need for a good chuckle or eye-roll-inducing pun.
-     </p>
-      <hr />
-    </header>
-    <div className='body'>
-    <Entity/>
+    <div className="App">
+      <Header />
     </div>
-    </div>
-  )
+  );
 }
 
-export default App
+export default App;
