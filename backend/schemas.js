@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 // Schema for the users collection
 
 const userSchema = new mongoose.Schema({
-  userid: { type: String, required: true },
+  userid: { type: Number, required: true },
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  posts: { type: [String], default: [], required: true },
+  posts: { type: [Number], default: [], required: true },
 });
 
 // Schema for the posts collection
