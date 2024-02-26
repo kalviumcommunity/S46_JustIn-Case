@@ -13,6 +13,10 @@ body {
   padding: 5px;
 }
 
+.logo-sign h1 {
+  cursor: pointer;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -44,6 +48,7 @@ header p {
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid grey;
+  width: 80%;
 }
 
 .App {
@@ -87,4 +92,56 @@ header p {
   flex-grow: 1;
   overflow-wrap: break-word;
   margin-right: 5%;
+}
+
+.addPost {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.postFormBlk {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.postForm > div {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  row-gap: 40px;
+}
+
+.postForm > div input {
+  height: 120%;
+}
+
+.postForm {
+  border: 2px solid;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#postSubmitBtn {
+  width: 40%;
+  height: 24px;
+}
+
+.postUserBlk {
+  width: 100%;
 }
