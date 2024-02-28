@@ -1,19 +1,33 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { MdOutlineAddCircle } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidDislike } from "react-icons/bi";
-import { Details } from "../App";
+import { Details, Base_API } from "../App";
+import { RiEdit2Line } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { postDetails } = useContext(Details);
+  const { postDetails, setFlag } = useContext(Details);
+
+  const deletePost = async (e) => {
+    try {
+      const response = await axios.delete(Base_API + `/posts/${e}`);
+      if (response.status == 200) {
+        setFlag((prev) => !prev);
+        console.log("Post Deleted");
+      }
+    } catch (err) {
+      console.log({ Error: err.message });
+    }
+  };
 
   return (
     <>
-      <div className="addPost" onClick={() => navigate("/newpost")}>
+      <Link className="addPost" to="/newpost">
         <MdOutlineAddCircle size="50px" />
-      </div>
+      </Link>
 
       <div className="body">
         {postDetails.length > 0
@@ -21,15 +35,35 @@ const Home = () => {
               return (
                 <div className="container" key={post.postid} id={post.postid}>
                   <p>{post.content}</p>
-                  <div className="like-dis">
-                    <span className="likes">
-                      <AiFillHeart size="30px" fill="grey" />
-                      <p>{post.likes_count}</p>
-                    </span>
-                    <span className="disLikes">
-                      <BiSolidDislike size="30px" fill="grey" />
-                      <p>{post.dislikes_count}</p>
-                    </span>
+                  <div className="options">
+                    <div className="like-dis">
+                      <span className="likes">
+                        <AiFillHeart size="30px" />
+                        <p>{post.likes_count}</p>
+                      </span>
+                      <span className="disLikes">
+                        <BiSolidDislike size="30px" />
+                        <p>{post.dislikes_count}</p>
+                      </span>
+                    </div>
+                    <div className="editDlt">
+                      <Link
+                        to={`/updatepost/${post.postid}`}
+                        className="editBtn"
+                      >
+                        <RiEdit2Line size="30px" />
+                      </Link>
+                      <span
+                        className="dltBtn"
+                        onClick={() => {
+                          confirm("Are you sure you want to delete it?")
+                            ? deletePost(post.postid)
+                            : "";
+                        }}
+                      >
+                        <MdDelete size="30px" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               );

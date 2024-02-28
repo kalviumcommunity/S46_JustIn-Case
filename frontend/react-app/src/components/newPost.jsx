@@ -2,16 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { Details } from "../App";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Base_API } from "../App";
 
 const NewPost = () => {
   const navigate = useNavigate();
-  const { postDetails, setPostDetails } = useContext(Details);
+  const { postDetails, setFlag } = useContext(Details);
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
-    postid: postDetails.length + 1,
+    postid: postDetails[postDetails.length - 1].postid + 1,
     userid: 11, // For Now I have given default userid
     content: "",
   });
+
+
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -22,18 +25,16 @@ const NewPost = () => {
   };
 
   const pushPost = async () => {
-    const postAPI = "https://justin-case.onrender.com/api/posts";
     try {
-      const postResponse = await axios.post(postAPI, formData);
+      const postResponse = await axios.post(Base_API + "/posts", formData);
       if (postResponse.status === 201) {
         console.log("Post Created");
-        const temp = [...postDetails, postResponse.data];
-        setPostDetails(temp);
+        setFlag((prev) => !prev);
         navigate("/");
         //  Have to update the users collection with the same post_id
       }
     } catch (err) {
-      console.log(err);
+      console.log({ Error: err.message });
     }
   };
 
@@ -69,7 +70,7 @@ const NewPost = () => {
             <label htmlFor="content"> Type your Joke here: </label>
             <input
               type="text"
-              placeholder=""
+              placeholder="TYPE THE JOKE..."
               name="content"
               value={formData.content}
               onChange={handleChange}
