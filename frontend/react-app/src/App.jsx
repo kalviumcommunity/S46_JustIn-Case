@@ -5,16 +5,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Details = React.createContext();
+export const Base_API = "https://justin-case.onrender.com/api";
 function App() {
   const navigate = useNavigate();
+  const [flag, setFlag] = useState(false);
   const [postDetails, setPostDetails] = useState([]);
-  const api = "https://justin-case.onrender.com/api/posts";
-
   useEffect(() => {
     const getData = async () => {
       try {
         await axios
-          .get(api)
+          .get(Base_API + "/posts")
           .then((res) => {
             setPostDetails(res.data);
           })
@@ -24,8 +24,7 @@ function App() {
       }
     };
     getData();
-    console.log("App.jssx");
-  }, []);
+  }, [flag]);
 
   return (
     <>
@@ -35,7 +34,7 @@ function App() {
           <button id="logbtn">Login/SignUp</button>
         </div>
       </header>
-      <Details.Provider value={{ postDetails, setPostDetails }}>
+      <Details.Provider value={{ postDetails, setPostDetails, setFlag }}>
         <AllRoutes />
       </Details.Provider>
     </>
