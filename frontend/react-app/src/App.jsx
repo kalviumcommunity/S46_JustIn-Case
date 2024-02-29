@@ -16,7 +16,7 @@ function App() {
         await axios
           .get(Base_API + "/posts")
           .then((res) => {
-            setPostDetails(res.data);
+            setPostDetails(res.data.sort((a,b)=>a.postid - b.postid));
           })
           .catch((err) => console.log(err));
       } catch (err) {
