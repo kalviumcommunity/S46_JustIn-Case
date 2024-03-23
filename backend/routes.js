@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const { User, Post } = require("./schemas"); // Importing model from schemas.js
+const { joiNewPost, joiUserSignUp } = require("./joiSchema");
 
 app.use(cors());
 app.use(express.json());
@@ -26,25 +27,64 @@ app.get("/api/posts", async (req, res) => {
   }
 });
 
-// POST endpoint to create a new user
+// POST endpoint to create a new user and validate with JOI(Signup)
 
 app.post("/api/users", async (req, res) => {
-  const user = new User(req.body);
   try {
-    const newUser = await user.save();
-    res.status(201).json(newUser);
+    const validation = await joiUserSignUp.validateAsync(req.body)
+        // To make sure the new user has the greatest value for the userid property
+    const maxUserId = await User.findOne(
+      {},
+      { userid: 1 },
+      { sort: { userid: -1 } }
+    );
+    const nextUserId = maxUserId ? maxUserId.userid + 1 : 0;
+
+    req.body.userid = nextUserId;
+
+    const newUser = new User(req.body);
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// POST endpoint to create a new post
+// POST endpoint to verify the user  (Login)
+
+app.post("/api/users/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const doesExist = await User.findOne({ username: username });
+    
+    if (doesExist.password != password) {
+      return res.status(401).json({ message: "invalid Password" });
+    }
+    res.status(200).json({ message: "Login Successful" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// POST endpoint to create a new post and validate with JOI
 
 app.post("/api/posts", async (req, res) => {
-  const post = new Post(req.body);
   try {
-    const newPost = await post.save();
-    res.status(201).json(newPost);
+    const validateData = await joiNewPost.validateAsync(req.body)
+    // To make sure the new post has the greatest value for the postid property
+    const maxPostId = await Post.findOne(
+      {},
+      { postid: 1 },
+      { sort: { postid: -1 } }
+    );
+    const nextPostId = maxPostId ? maxPostId.postid + 1 : 0;
+
+    req.body.postid = nextPostId;
+
+    const newPost = new Post(req.body);
+    const savedPost = await newPost.save();
+    res.status(201).json(savedPost);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

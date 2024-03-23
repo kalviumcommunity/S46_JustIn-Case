@@ -9,7 +9,6 @@ const NewPost = () => {
   const { postDetails, setFlag } = useContext(Details);
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
-    postid: postDetails[postDetails.length - 1].postid + 1,
     userid: 11, // For Now I have given default userid
     content: "",
   });
