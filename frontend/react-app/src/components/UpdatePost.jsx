@@ -39,7 +39,7 @@ const UpdatePost = () => {
       if (updateResponse.status == 200) {
         console.log("Post Updated");
         setFlag((prev) => !prev);
-        navigate("/");
+        navigate("/home");
       }
     } catch (err) {
       console.log({ Error: err.message });
@@ -64,7 +64,7 @@ const UpdatePost = () => {
             <textarea
               style={{ height: "150px", width: "390px", padding: "20px" }}
               type="text"
-              placeholder=""
+              placeholder="Will your updated joke make us laugh?"
               name="content"
               value={post.content}
               onChange={handleChange}

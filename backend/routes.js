@@ -56,12 +56,12 @@ app.post("/api/users/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const doesExist = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username });
     
-    if (doesExist.password != password) {
+    if (user.password != password) {
       return res.status(401).json({ message: "invalid Password" });
     }
-    res.status(200).json({ message: "Login Successful" });
+    res.status(200).json({ message: "Login Successful", user });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -141,6 +141,7 @@ app.put("/api/users/:userid", async (req, res) => {
 
 app.put("/api/posts/:postid", async (req, res) => {
   const { postid } = req.params;
+  const validateData = await joiNewPost.validateAsync(req.body)
   try {
     const updatedPost = await Post.findOneAndUpdate({ postid }, req.body, {
       new: true,

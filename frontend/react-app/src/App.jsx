@@ -7,9 +7,10 @@ import axios from "axios";
 export const Details = React.createContext();
 export const Base_API = "https://justin-case.onrender.com/api";
 function App() {
-  const navigate = useNavigate();
+
   const [flag, setFlag] = useState(false);
   const [postDetails, setPostDetails] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
     const getData = async () => {
       try {
@@ -28,13 +29,8 @@ function App() {
 
   return (
     <>
-      <header>
-        <div className="logo-sign">
-          <h1 onClick={() => navigate("/")}>JustIn Case</h1>
-          <button id="logbtn">Login/SignUp</button>
-        </div>
-      </header>
-      <Details.Provider value={{ postDetails, setPostDetails, setFlag }}>
+
+      <Details.Provider value={{ postDetails, setPostDetails, setFlag, currentUser, setCurrentUser }}>
         <AllRoutes />
       </Details.Provider>
     </>
