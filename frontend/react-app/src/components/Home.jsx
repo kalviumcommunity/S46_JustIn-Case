@@ -7,6 +7,7 @@ import { Details, Base_API } from "../App";
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const { postDetails, setFlag, currentUser, setCurrentUser } =
@@ -25,12 +26,13 @@ const Home = () => {
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     if (e.target.textContent === "Login/SignUp") {
       navigate("/");
     } else {
       if(confirm('Are you sure to Logout?')){
-        setCurrentUser({})
+        await setCurrentUser({})
+        Cookies.remove("username")
         navigate('/')
       }
     }

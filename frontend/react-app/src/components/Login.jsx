@@ -3,6 +3,7 @@ import axios from "axios";
 import "./FormStyles.css";
 import { Details, Base_API } from "../App";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const { setCurrentUser } = useContext(Details);
+  const { setCurrentUser, currentUser } = useContext(Details);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
@@ -38,7 +39,8 @@ const Login = () => {
     try {
       const response = await axios.post(API, loginData);
       if (response.data.message === "Login Successful") {
-        setCurrentUser(response.data.user);
+        await setCurrentUser(response.data.user);
+        Cookies.set("username", currentUser.username)
         navigate("/home");
       }
     } catch (err) {
