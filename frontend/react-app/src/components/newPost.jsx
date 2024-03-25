@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Details } from "../App";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +10,6 @@ const NewPost = () => {
   const [error, setError] = useState({});
   const [content, setContent] = useState("");
 
-
-
   const handleChange = (e) => {
     let { value } = e.target;
     setContent(value);
@@ -20,14 +18,14 @@ const NewPost = () => {
   const pushPost = async () => {
     try {
       const postResponse = await axios.post(Base_API + "/posts", {
-        content : content,
-        userid : currentUser.userid
+        content: content,
+        userid: currentUser.userid,
       });
       if (postResponse.status === 201) {
         console.log("Post Created");
         setFlag((prev) => !prev);
         navigate("/home");
-        //  Have to update the users collection with the same post_id
+        //  Have to update the users collection with the same post id
       }
     } catch (err) {
       console.log({ Error: err.message });
@@ -60,7 +58,7 @@ const NewPost = () => {
           <div>
             <label htmlFor="content"> Type your Joke here: </label>
             <textarea
-              style={{maxWidth:'300px', minWidth:"300px"}}
+              style={{ maxWidth: "300px", minWidth: "300px" }}
               type="text"
               placeholder="TYPE THE JOKE..."
               name="content"

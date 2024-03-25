@@ -30,21 +30,21 @@ const Home = () => {
     if (e.target.textContent === "Login/SignUp") {
       navigate("/");
     } else {
-      if(confirm('Are you sure to Logout?')){
-        await setCurrentUser({})
-        Cookies.remove("username")
-        navigate('/')
+      if (confirm("Are you sure to Logout?")) {
+        await setCurrentUser({});
+        Cookies.remove("token");
+        navigate("/");
       }
     }
   };
-  
+
   return (
     <>
-    {currentUser && 
-      <Link className="addPost" to="/newpost">
-        <MdOutlineAddCircle size="50px" />
-      </Link>
-    }
+      {currentUser && (
+        <Link className="addPost" to="/newpost">
+          <MdOutlineAddCircle size="50px" />
+        </Link>
+      )}
       <header>
         <div className="logo-sign">
           <h1 onClick={() => navigate("/home")}>JustIn Case</h1>
@@ -70,28 +70,32 @@ const Home = () => {
                         <p>{post.dislikes_count}</p>
                       </span>
                     </div>
-                    {currentUser ? currentUser.userid === post.userid ? (
-                      <div className="editDlt">
-                        <Link
-                          to={`/updatepost/${post.postid}`}
-                          className="editBtn"
-                        >
-                          <RiEdit2Line size="30px" />
-                        </Link>
-                        <span
-                          className="dltBtn"
-                          onClick={() => {
-                            confirm("Are you sure you want to delete it?")
-                              ? deletePost(post.postid)
-                              : "";
-                          }}
-                        >
-                          <MdDelete size="30px" />
-                        </span>
-                      </div>
+                    {currentUser ? (
+                      currentUser.userid === post.userid ? (
+                        <div className="editDlt">
+                          <Link
+                            to={`/updatepost/${post.postid}`}
+                            className="editBtn"
+                          >
+                            <RiEdit2Line size="30px" />
+                          </Link>
+                          <span
+                            className="dltBtn"
+                            onClick={() => {
+                              confirm("Are you sure you want to delete it?")
+                                ? deletePost(post.postid)
+                                : "";
+                            }}
+                          >
+                            <MdDelete size="30px" />
+                          </span>
+                        </div>
+                      ) : (
+                        ""
+                      )
                     ) : (
                       ""
-                    ): ""}
+                    )}
                   </div>
                 </div>
               );
