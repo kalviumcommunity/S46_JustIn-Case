@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Details, Base_API } from "../App";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -42,7 +43,9 @@ const SignUp = () => {
     const API = Base_API + "/users";
     try {
       let response = await axios.post(API, signupData);
-      setCurrentUser(response.data);
+      await setCurrentUser(response.data);
+      Cookies.set("username", response.data.username)
+
       navigate("/home");
     } catch (err) {
       console.log(err);
