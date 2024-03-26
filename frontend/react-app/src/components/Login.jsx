@@ -13,7 +13,7 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const { setCurrentUser } = useContext(Details);
+  const { setCurrentUser, setFlag } = useContext(Details);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
@@ -42,6 +42,7 @@ const Login = () => {
       if (response.data.message === "Login Successful") {
         await setCurrentUser(response.data.user);
         Cookies.set("token", response.data.token, { expires: 1 });
+        await setFlag(prev => !prev);
         navigate("/home");
       }
     } catch (err) {

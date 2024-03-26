@@ -49,7 +49,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getData();
+    if(Cookies.get("token")){
+      getData();
+    }
   }, [flag]);
 
   return (

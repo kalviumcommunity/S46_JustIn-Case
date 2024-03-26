@@ -20,7 +20,7 @@ const CreateToken = (user) => {
   return token;
 };
 
-const authenticate = (req, res) => {
+const authenticate = (req, res, next) => {
   const token = req.headers.authorization;
 
   // Checking if token is present or not
@@ -34,7 +34,7 @@ const authenticate = (req, res) => {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // Store decoded user information in the request object
-    console.log(req.user);
+    next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token." });
   }

@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { setCurrentUser } = useContext(Details);
+  const { setCurrentUser, setFlag } = useContext(Details);
   const [errors, setErrors] = useState({});
   const [signupData, setSignUpData] = useState({
     username: "",
@@ -46,6 +46,7 @@ const SignUp = () => {
       let response = await axios.post(API, signupData);
       await setCurrentUser(response.data.user);
       Cookies.set("token", response.data.token, { expires: 1 });
+      await setFlag(prev => !prev);
       navigate("/home");
     } catch (err) {
       console.log(err);
