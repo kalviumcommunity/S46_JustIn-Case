@@ -41,11 +41,11 @@ const SignUp = () => {
 
   const createUser = async () => {
     const API = Base_API + "/users";
+
     try {
       let response = await axios.post(API, signupData);
-      await setCurrentUser(response.data);
-      Cookies.set("username", response.data.username)
-
+      await setCurrentUser(response.data.user);
+      Cookies.set("token", response.data.token, { expires: 1 });
       navigate("/home");
     } catch (err) {
       console.log(err);
