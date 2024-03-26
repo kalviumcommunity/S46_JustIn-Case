@@ -12,6 +12,8 @@ function App() {
   const [flag, setFlag] = useState(false);
   const [postDetails, setPostDetails] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [totalUsers, setTotalUsers] = useState([]);
+  const [displayUsers, setDisplayUsers] = useState("all");
 
   const getData = async () => {
     try {
@@ -27,6 +29,7 @@ function App() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     const AutoLogin = async () => {
       if (Cookies.get("token")) {
@@ -35,6 +38,7 @@ function App() {
           userid: user.userid,
           username: user.username,
         });
+        // setDisplayUsers("all")
         navigate("/home");
       }
     };
@@ -44,12 +48,27 @@ function App() {
       }
       navigate("/");
     };
+
+    const getAllUsers = async () => {
+      try {
+        const response = await axios.get(Base_API + "/users");
+        setTotalUsers(response.data.sort((a, b) => a.userid - b.userid));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
     removeExpiredCookies();
     AutoLogin();
+    getAllUsers();
   }, []);
 
+  // useEffect(()=>{
+  //   console.log(totalUsers)
+  // }, [totalUsers])
+
   useEffect(() => {
-    if(Cookies.get("token")){
+    if (Cookies.get("token")) {
       getData();
     }
   }, [flag]);
@@ -63,6 +82,9 @@ function App() {
           setFlag,
           currentUser,
           setCurrentUser,
+          totalUsers,
+          displayUsers,
+          setDisplayUsers,
         }}
       >
         <AllRoutes />
