@@ -44,7 +44,7 @@ const authenticate = (req, res, next) => {
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    res.json(users.map(user => ({userid: user.userid, username: user.username})));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
